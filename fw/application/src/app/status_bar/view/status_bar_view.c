@@ -7,12 +7,8 @@ static void chrg_callback(void) {
 }
 
 static void status_bar_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) {
+    // 先绘制图标
     mui_canvas_set_font(p_canvas, u8g2_font_siji_t_6x10);
-
-    // 添加"我"字
-    mui_canvas_set_font(p_canvas, u8g2_font_wqy12_t_chinese);  // 切换到中文字体
-    mui_canvas_draw_str(p_canvas, 20, 8, "我");  // 在坐标(20,8)处显示"我"
-    mui_canvas_set_font(p_canvas, u8g2_font_siji_t_6x10);  // 切换回图标字体
 
     if (get_stats()) {
         mui_canvas_draw_glyph(p_canvas, 100, 8, 0xe09e);
@@ -22,6 +18,9 @@ static void status_bar_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) 
 
     uint8_t bt = bat_get_level();
     mui_canvas_draw_glyph(p_canvas, 110, 8, 0xe24c + bt);
+
+    // 最后绘制文字，避免字体切换问题
+    mui_canvas_draw_str(p_canvas, 20, 8, "T");  // 先试试英文字母
 }
 
 static void status_bar_view_on_input(mui_view_t *p_view, mui_input_event_t *event) {}
@@ -46,8 +45,10 @@ status_bar_view_t *status_bar_view_create() {
 
     return p_status_bar_view;
 }
+
 void status_bar_view_free(status_bar_view_t *p_view) {
     mui_view_free(p_view->p_view);
     mui_mem_free(p_view);
 }
+
 mui_view_t *status_bar_view_get_view(status_bar_view_t *p_view) { return p_view->p_view; }
