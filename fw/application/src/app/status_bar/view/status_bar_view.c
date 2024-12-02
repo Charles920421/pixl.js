@@ -19,8 +19,8 @@ static void status_bar_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) 
     uint8_t bt = bat_get_level();
     mui_canvas_draw_glyph(p_canvas, 110, 8, 0xe24c + bt);
 
-    // 最后绘制文字，避免字体切换问题
-    mui_canvas_draw_str(p_canvas, 20, 8, "T");  // 先试试英文字母
+    // 使用正确的函数名
+    mui_canvas_draw_glyph(p_canvas, 20, 8, 'T');  // 使用 draw_glyph 替代 draw_str
 }
 
 static void status_bar_view_on_input(mui_view_t *p_view, mui_input_event_t *event) {}
