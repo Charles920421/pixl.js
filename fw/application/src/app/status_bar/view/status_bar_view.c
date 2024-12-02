@@ -9,6 +9,11 @@ static void chrg_callback(void) {
 static void status_bar_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) {
     mui_canvas_set_font(p_canvas, u8g2_font_siji_t_6x10);
 
+    // 添加"我"字
+    mui_canvas_set_font(p_canvas, u8g2_font_wqy12_t_chinese);  // 切换到中文字体
+    mui_canvas_draw_str(p_canvas, 20, 8, "我");  // 在坐标(20,8)处显示"我"
+    mui_canvas_set_font(p_canvas, u8g2_font_siji_t_6x10);  // 切换回图标字体
+
     if (get_stats()) {
         mui_canvas_draw_glyph(p_canvas, 100, 8, 0xe09e);
     }
